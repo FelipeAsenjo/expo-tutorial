@@ -41,4 +41,5 @@ This command will move the starter code to the **app-example** directory and cre
 
 - **app directory**: A special directory containing only routes and their layouts. Any files added to this directory become a screen inside our native app and a page on the web.
 - **Root layout**: The *app/_layout.tsx* file. It defines shared UI elements such as headers and tab bars so they are consistent between different routes.
+- **Not Found Screen**: Expo Router uses a special *+not-found.tsx* file to handle this case.
 - **File name conventions**: Index file names, such as *index.tsx*, match their parent directory and do not add a path segment. For example, the index.tsx file in the app directory matches / route.
