@@ -34,18 +34,41 @@ export default function EmojiSticker({ imageSize, stickerSource }: Props) {
       }
   });
 
+  // define drag (Pan) gesture with onChange listener for positioning
+  const drag = Gesture.Pan().onChange(event => {
+    translateX.value += event.changeX;
+    translateY.value += event.changeY;
+  });
+
+  // define styles that will be modified during transition
+  const containerStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: translateX.value,
+        },
+        {
+          translateY: translateY.value,
+        },
+      ],
+    };
+  });
+
   return (
-    <Animated.View style={{ top: -350 }}>
-      {/* Detect desirable gesture */}
-      <GestureDetector gesture={ doubleTap }>
-        {/* Animated components use the components styles to determine which values to animate */}
-        {/* Animated exports Animated.View, Animated.Text, Animated.ScrollView among others */}
-        <Animated.Image
-          source={stickerSource}
-          resizeMode="contain"
-          style={[imageStyle, {width: imageSize, height: imageSize }]}
-        />
-      </GestureDetector>
-    </Animated.View>
+    // wrapp the view into the gesture listener
+    <GestureDetector gesture={ drag }>
+      <Animated.View style={[containerStyle, { top: -350 }]}>
+        {/* Detect desirable gesture */}
+        <GestureDetector gesture={ doubleTap }>
+          {/* Animated components use the components styles to determine which values to animate */}
+          {/* Animated exports Animated.View, Animated.Text, Animated.ScrollView among others */}
+          <Animated.Image
+            source={stickerSource}
+            resizeMode="contain"
+            style={[imageStyle, {width: imageSize, height: imageSize }]}
+          />
+        </GestureDetector>
+      </Animated.View>
+    </GestureDetector>
   );
 }
